@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project DrishtiX – AI Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        .cyber-glow {
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(34, 197, 94, 0.8); }
+        }
+        
+        .alert-pulse {
+            animation: alert-flash 1s ease-in-out infinite;
+        }
+        
+        @keyframes alert-flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .floating-card {
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .floating-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        .neural-network {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+        }
+        
+        .font-cyber {
+            font-family: 'Orbitron', monospace;
+        }
+        
+        .heat-map {
+            background: linear-gradient(45deg, #ef4444, #f59e0b, #10b981, #3b82f6);
+            background-size: 200% 200%;
+            animation: heat-shift 3s ease-in-out infinite;
+        }
+        
+        @keyframes heat-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .drone-path {
+            stroke-dasharray: 5,5;
+            animation: dash 2s linear infinite;
+        }
+        
+        @keyframes dash {
+            to { stroke-dashoffset: -10; }
+        }
+        
+        .typing-effect {
+            overflow: hidden;
+            border-right: 2px solid #10b981;
+            animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #10b981; }
+        }
+    </style>
+</head>
+<body class="gradient-bg neural-network text-white font-sans min-h-screen">
+    <!-- Header -->
+    <header class="bg-black bg-opacity-50 backdrop-blur-lg p-4 flex justify-between items-center shadow-2xl border-b border-green-500">
+        <div class="flex items-center space-x-4">
+            <div class="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center cyber-glow">
+                <span class="text-black font-bold font-cyber">DX</span>
+            </div>
+            <h1 class="text-3xl font-bold font-cyber bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                Project DrishtiX
+            </h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-sm font-cyber">LIVE MONITORING</span>
+            </div>
+            <div class="bg-green-500 px-4 py-2 rounded-full font-cyber text-black font-bold">
+                THREAT LEVEL: MODERATE
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Real-time Crowd Visualization -->
+        <section class="floating-card bg-black bg-opacity-60 backdrop-blur-lg p-6 rounded-2xl shadow-2xl border border-green-500 col-span-2">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold font-cyber text-green-400">🌊 CROWD FLOW MATRIX</h2>
+                <div class="flex space-x-2">
+                    <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                    <span class="text-xs font-cyber">PREDICTIVE MODE</span>
+                </div>
+            </div>
+            <div class="relative h-80 bg-gray-900 rounded-lg overflow-hidden">
+                <canvas id="crowdHeatmap" class="w-full h-full"></canvas>
+                <div class="absolute top-4 left-4 space-y-2">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-red-500 rounded"></div>
+                        <span class="text-xs">Critical (>80%)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-yellow-500 rounded"></div>
+                        <span class="text-xs">Warning (60-80%)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-green-500 rounded"></div>
+                        <span class="text-xs">Safe (<60%)</span>
+                    </div>
+                </div>
+                <!-- Predicted Bottleneck Alert -->
+                <div class="absolute bottom-4 right-4 bg-red-600 px-3 py-2 rounded-lg alert-pulse">
+                    <div class="text-xs font-cyber">⚠️ BOTTLENECK PREDICTED</div>
+                    <div class="text-xs">Gate 3 - 14 minutes</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Command Interface -->
+        <section class="floating-card bg-black bg-opacity-60 backdrop-blur-lg p-6 rounded-2xl shadow-2xl border border-blue-500 col-span-2">
+            <h2 class="text-2xl font-bold font-cyber text-blue-400 mb-4">🤖 GEMINI COMMAND</h2>
+            <div class="space-y-4">
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <div class="text-sm text-gray-300 mb-2">Commander Query:</div>
+                    <input type="text" id="commandInput" placeholder="Ask Gemini anything..." 
+                           class="w-full bg-gray-700 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none font-cyber">
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg min-h-32">
+                    <div class="text-sm text-gray-300 mb-2">AI Response:</div>
+                    <div id="aiResponse" class="text-green-400 font-cyber typing-effect">
+                        Analyzing crowd patterns... Zone A showing 85% density with increasing velocity vectors. Recommend immediate deployment of Team Alpha to redirect flow through Gates 2 and 4.
+                    </div>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="executeCommand()" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg font-cyber transition-colors">
+                        EXECUTE
+                    </button>
+                    <button onclick="clearCommand()" class="bg-gray-600 hover:bg-gray-500 px-4 py-2 rounded-lg font-cyber transition-colors">
+                        CLEAR
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emotional Intelligence Monitor -->
+        <section class="floating-card bg-black bg-opacity-60 backdrop-blur-lg p-6 rounded-2xl shadow-2xl border border-purple-500">
+            <h2 class="text-xl font-bold font-cyber text-purple-400 mb-4">🧠 EMOTION RADAR</h2>
+            <div class="space-y-3">
+                <div class="bg-gradient-to-r from-red-600 to-red-400 p-3 rounded-lg">
+                    <div class="flex justify-between items-center">
+                        <span class="font-cyber text-sm">Zone A</span>
+                        <span class="text-2xl">😱</span>
+                    </div>
+                    <div class="text-xs">Panic Level: 89%</div>
+                    <div class="w-full bg-red-800 rounded-full h-2 mt-2">
+                        <div class="bg-red-400 h-2 rounded-full" style="width: 89%"></div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-yellow-600 to-yellow-400 p-3 rounded-lg">
+                    <div class="flex justify-between items-center">
+                        <span class="font-cyber text-sm">Zone B</span>
+                        <span class="text-2xl">😰</span>
+                    </div>
+                    <div class="text-xs">Anxiety Level: 67%</div>
+                    <div class="w-full bg-yellow-800 rounded-full h-2 mt-2">
+                        <div class="bg-yellow-400 h-2 rounded-full" style="width: 67%"></div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-green-600 to-green-400 p-3 rounded-lg">
+                    <div class="flex justify-between items-center">
+                        <span class="font-cyber text-sm">Zone C</span>
+                        <span class="text-2xl">😊</span>
+                    </div>
+                    <div class="text-xs">Calm Level: 92%</div>
+                    <div class="w-full bg-green-800 rounded-full h-2 mt-2">
+                        <div class="bg-green-400 h-2 rounded-full" style="width: 92%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Drone Swarm Controller -->
+        <section class="floating-card bg-black bg-opacity-60 backdrop-blur-lg p-6 rounded-2xl shadow-2xl border border-cyan-500">
+            <h2 class="text-xl font-bold font-cyber text-cyan-400 mb-4">🚁 DRONE SWARM</h2>
+            <div class="relative h-40 bg-gray-900 rounded-lg overflow-hidden">
+                <svg class="w-full h-full" viewBox="0 0 200 100">
+                    <!-- Drone paths -->
+                    <path d="M20,20 Q50,10 80,20 T140,20" stroke="#06b6d4" stroke-width="2" fill="none" class="drone-path"/>
+                    <path d="M20,50 Q50,40 80,50 T140,50" stroke="#06b6d4" stroke-width="2" fill="none" class="drone-path"/>
+                    <path d="M20,80 Q50,70 80,80 T140,80" stroke="#06b6d4" stroke-width="2" fill="none" class="drone-path"/>
+                    
+                    <!-- Drone icons -->
+                    <g class="animate-pulse">
+                        <circle cx="30" cy="25" r="3" fill="#06b6d4"/>
+                        <circle cx="70" cy="45" r="3" fill="#06b6d4"/>
+                        <circle cx="120" cy="75" r="3" fill="#06b6d4"/>
+                    </g>
+                </svg>
+                <div class="absolute bottom-2 left-2 text-xs font-cyber">
+                    <div>Active: 12 drones</div>
+                    <div>Coverage: 94%</div>
+                </div>
+            </div>
+            <div class="mt-4 space-y-2">
+                <button class="w-full bg-cyan-600 hover:bg-cyan-500 py-2 rounded-lg font-cyber text-sm transition-colors">
+                    DEPLOY TO ZONE A
+                </button>
+                <button class="w-full bg-gray-600 hover:bg-gray-500 py-2 rounded-lg font-cyber text-sm transition-colors">
+                    RECALL SWARM
+                </button>
+            </div>
+        </section>
+
+        <!-- Predictive Analytics -->
+        <section class="floating-card bg-black bg-opacity-60 backdrop-blur-lg p-6 rounded-2xl shadow-2xl border border-orange-500">
+            <h2 class="text-xl font-bold font-cyber text-orange-400 mb-4">📊 PREDICTIVE ANALYTICS</h2>
+            <div class="h-32">
+                <canvas id="predictiveChart"></canvas>
+            </div>
+            <div class="mt-4 text-sm space-y-2">
+                <div class="flex justify-between">
+                    <span>Next Incident:</span>
+                    <span class="text-orange-400 font-cyber">12 min</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Confidence:</span>
+                    <span class="text-green-400 font-cyber">87%</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Risk Level:</span>
+                    <span class="text-red-400 font-cyber">HIGH</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Lost Person AI -->
+        <section class="floating-card bg-black bg-opacity-60 backdrop-blur-lg p-6 rounded-2xl shadow-2xl border border-yellow-500">
+            <h2 class="text-xl font-bold font-cyber text-yellow-400 mb-4">🔍 VISUAL SEARCH AI</h2>
+            <div class="space-y-4">
+                <div class="border-2 border-dashed border-yellow-500 rounded-lg p-4 text-center">
+                    <input type="file" id="personImage" class="hidden" accept="image/*">
+                    <label for="personImage" class="cursor-pointer">
+                        <div class="text-yellow-400 text-4xl mb-2">📸</div>
+                        <div class="text-sm font-cyber">Upload Photo</div>
+                    </label>
+                </div>
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <div class="text-sm text-gray-300 mb-2">Search Results:</div>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between bg-green-700 p-2 rounded">
+                            <span class="text-xs font-cyber">Match Found: 94%</span>
+                            <span class="text-xs">Zone B, Camera 7</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-yellow-700 p-2 rounded">
+                            <span class="text-xs font-cyber">Possible Match: 76%</span>
+                            <span class="text-xs">Zone D, Camera 3</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-full bg-yellow-600 hover:bg-yellow-500 py-2 rounded-lg font-cyber text-sm transition-colors">
+                    TRACK MOVEMENT
+                </button>
+            </div>
+        </section>
+
+        <!-- Social Media Intelligence -->
+        <section class="floating-card bg-black bg-opacity-60 backdrop-blur-lg p-6 rounded-2xl shadow-2xl border border-pink-500 col-span-2">
+            <h2 class="text-xl font-bold font-cyber text-pink-400 mb-4">📱 SOCIAL INTEL FEED</h2>
+            <div class="space-y-3 max-h-40 overflow-y-auto">
+                <div class="bg-red-800 p-3 rounded-lg">
+                    <div class="flex items-center space-x-2 mb-1">
+                        <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                        <span class="text-xs font-cyber">TWITTER • 2 min ago</span>
+                    </div>
+                    <div class="text-sm">"Crowd getting crazy near main stage! Can't move! #Event2024"</div>
+                    <div class="text-xs text-gray-400 mt-1">Sentiment: PANIC • Location: Zone A</div>
+                </div>
+                <div class="bg-yellow-800 p-3 rounded-lg">
+                    <div class="flex items-center space-x-2 mb-1">
+                        <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <span class="text-xs font-cyber">INSTAGRAM • 5 min ago</span>
+                    </div>
+                    <div class="text-sm">"Long queues at food court, getting restless..."</div>
+                    <div class="text-xs text-gray-400 mt-1">Sentiment: FRUSTRATED • Location: Zone B</div>
+                </div>
+                <div class="bg-green-800 p-3 rounded-lg">
+                    <div class="flex items-center space-x-2 mb-1">
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span class="text-xs font-cyber">TWITTER • 8 min ago</span>
+                    </div>
+                    <div class="text-sm">"Amazing vibes at the side stage! Perfect spot!"</div>
+                    <div class="text-xs text-gray-400 mt-1">Sentiment: POSITIVE • Location: Zone C</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Critical Actions Panel -->
+        <section class="floating-card bg-black bg-opacity-60 backdrop-blur-lg p-6 rounded-2xl shadow-2xl border border-red-500 col-span-4">
+            <h2 class="text-2xl font-bold font-cyber text-red-400 mb-4">🚨 CRITICAL ACTIONS REQUIRED</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-red-700 p-4 rounded-lg alert-pulse">
+                    <h3 class="font-cyber text-lg mb-2">IMMEDIATE</h3>
+                    <p class="text-sm mb-3">Deploy crowd control to Zone A. Bottleneck forming at Gate 3.</p>
+                    <button class="w-full bg-red-600 hover:bg-red-500 py-2 rounded font-cyber transition-colors">
+                        EXECUTE NOW
+                    </button>
+                </div>
+                <div class="bg-yellow-700 p-4 rounded-lg">
+                    <h3 class="font-cyber text-lg mb-2">UPCOMING</h3>
+                    <p class="text-sm mb-3">Medical team standby. Stress indicators rising in Zone B.</p>
+                    <button class="w-full bg-yellow-600 hover:bg-yellow-500 py-2 rounded font-cyber transition-colors">
+                        PREPARE
+                    </button>
+                </div>
+                <div class="bg-blue-700 p-4 rounded-lg">
+                    <h3 class="font-cyber text-lg mb-2">PREVENTIVE</h3>
+                    <p class="text-sm mb-3">Redirect foot traffic. Open alternative routes to reduce pressure.</p>
+                    <button class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded font-cyber transition-colors">
+                        SCHEDULE
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Initialize charts
+        const ctx1 = document.getElementById('crowdHeatmap').getContext('2d');
+        const ctx2 = document.getElementById('predictiveChart').getContext('2d');
+        
+        // Crowd heatmap simulation
+        const crowdData = {
+            labels: ['Zone A', 'Zone B', 'Zone C', 'Zone D'],
+            datasets: [{
+                label: 'Crowd Density',
+                data: [85, 67, 45, 30],
+                backgroundColor: [
+                    'rgba(239, 68, 68, 0.8)',
+                    'rgba(245, 158, 11, 0.8)',
+                    'rgba(16, 185, 129, 0.8)',
+                    'rgba(59, 130, 246, 0.8)'
+                ]
+            }]
+        };
+        
+        new Chart(ctx1, {
+            type: 'doughnut',
+            data: crowdData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        
+        // Predictive analytics chart
+        const timeData = {
+            labels: ['Now', '5min', '10min', '15min', '20min'],
+            datasets: [{
+                label: 'Risk Level',
+                data: [60, 75, 85, 90, 95],
+                borderColor: 'rgb(249, 115, 22)',
+                backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                tension: 0.4
+            }]
+        };
+        
+        new Chart(ctx2, {
+            type: 'line',
+            data: timeData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+        
+        // Interactive functions
+        function executeCommand() {
+            const input = document.getElementById('commandInput');
+            const response = document.getElementById('aiResponse');
+            
+            if (input.value.trim()) {
+                response.innerHTML = `Processing command: "${input.value}"... <br><br>Command executed successfully. Deploying resources based on AI analysis.`;
+                input.value = '';
+            }
+        }
+        
+        function clearCommand() {
+            document.getElementById('commandInput').value = '';
+            document.getElementById('aiResponse').innerHTML = 'Ready for new command...';
+        }
+        
+        // Real-time updates simulation
+        setInterval(() => {
+            // Update some random values to simulate real-time data
+            const zones = ['Zone A', 'Zone B', 'Zone C', 'Zone D'];
+            const randomZone = zones[Math.floor(Math.random() * zones.length)];
+            console.log(`Updated data for ${randomZone}`);
+        }, 5000);
+        
+        // Handle file upload
+        document.getElementById('personImage').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                // Simulate processing
+                setTimeout(() => {
+                    alert('Image processed! Person detected in Zone B with 94% confidence.');
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

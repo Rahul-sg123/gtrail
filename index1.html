@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project DrishtiX – AI Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-950 text-white font-sans min-h-screen">
+    <header class="bg-gray-900 p-4 flex justify-between items-center shadow">
+      <h1 class="text-2xl font-bold text-teal-400">🧠 Project DrishtiX</h1>
+      <span class="text-gray-300">🔒 Secure AI Command Mode</span>
+    </header>
+
+    <main class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Crowd Pressure Prediction -->
+      <section class="bg-gray-900 p-4 rounded shadow-lg col-span-2">
+        <h2 class="text-xl font-bold text-orange-400 mb-2">🌀 Crowd Pressure Map</h2>
+        <p class="text-gray-400 text-sm mb-4">Real-time density × velocity flow prediction</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-red-700 p-4 rounded shadow">🔴 Zone A<br/>Critical Pressure</div>
+          <div class="bg-yellow-600 p-4 rounded shadow">🟠 Zone B<br/>Rising Pressure</div>
+          <div class="bg-green-600 p-4 rounded shadow">🟢 Zone C<br/>Stable</div>
+          <div class="bg-blue-600 p-4 rounded shadow">🔵 Zone D<br/>Low Activity</div>
+        </div>
+      </section>
+
+      <!-- Emotion Heatmap Summary -->
+      <section class="bg-gray-900 p-4 rounded shadow-lg">
+        <h2 class="text-xl font-bold text-pink-400 mb-2">🧠 Crowd Sentiment</h2>
+        <p class="text-gray-400 text-sm mb-3">Emotion-based zone scans</p>
+        <ul class="space-y-2">
+          <li class="bg-red-800 p-2 rounded">Zone A: 😱 Panic Surging</li>
+          <li class="bg-yellow-800 p-2 rounded">Zone B: 😰 Uneasy</li>
+          <li class="bg-green-800 p-2 rounded">Zone C: 😊 Calm</li>
+          <li class="bg-blue-800 p-2 rounded">Zone D: 😐 Neutral</li>
+        </ul>
+      </section>
+
+      <!-- Lost Person Visual Match System -->
+      <section class="bg-gray-900 p-4 rounded shadow-lg col-span-1">
+        <h2 class="text-xl font-bold text-yellow-400 mb-2">🔎 Visual Match: Lost Person</h2>
+        <p class="text-gray-400 text-sm">Upload image to locate individuals visually</p>
+        <input type="file" class="w-full mt-2 mb-4 bg-gray-800 p-2 rounded" />
+        <div class="bg-gray-800 p-3 rounded">
+          <p class="text-sm text-teal-300">Match Found: John D. (Zone B) ✅</p>
+          <button class="mt-2 bg-teal-600 px-3 py-1 text-sm rounded">Ping Responder</button>
+        </div>
+      </section>
+
+      <!-- Action Suggestion Engine -->
+      <section class="bg-gray-900 p-4 rounded shadow-lg col-span-3">
+        <h2 class="text-xl font-bold text-lime-400 mb-2">⚡ AI Decision Assist</h2>
+        <p class="text-gray-400 text-sm">Gemini Agent Suggestions</p>
+        <div class="bg-gray-800 p-4 mt-2 rounded">
+          <p class="text-sm text-lime-200">"High-pressure risk in Zone A. Recommend closing Gate 4 and dispatching crowd control unit."</p>
+          <button class="mt-3 bg-lime-600 px-4 py-2 rounded">🛑 Execute Action</button>
+        </div>
+      </section>
+
+      <!-- Timeline of Last Incidents -->
+      <section class="bg-gray-900 p-4 rounded shadow-lg col-span-3">
+        <h2 class="text-xl font-bold text-indigo-400 mb-2">📜 Incident Timeline</h2>
+        <ul class="text-sm space-y-2 text-gray-300">
+          <li>🕒 10:52 AM – Smoke detected in Zone C</li>
+          <li>🕒 10:49 AM – Crowd surge alert from Zone A</li>
+          <li>🕒 10:45 AM – Panic cluster detected near North Gate</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

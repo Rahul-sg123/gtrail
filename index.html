@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project DrishtiX – AI Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        /* Innovative Animated Background */
+        body {
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 50% 100%; }
+            75% { background-position: 50% 0%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Particle System Background */
+        .particle-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Neural Network Lines */
+        .neural-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .neural-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+            height: 1px;
+            animation: neuralPulse 8s infinite ease-in-out;
+        }
+        
+        @keyframes neuralPulse {
+            0%, 100% { opacity: 0.1; transform: scaleX(0); }
+            50% { opacity: 0.6; transform: scaleX(1); }
+        }
+        
+        /* Enhanced Glowing Effects */
+        .cyber-glow {
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.6), inset 0 0 30px rgba(34, 197, 94, 0.1);
+            animation: pulse-glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 30px rgba(34, 197, 94, 0.6), inset 0 0 30px rgba(34, 197, 94, 0.1); }
+            100% { box-shadow: 0 0 50px rgba(34, 197, 94, 0.9), inset 0 0 50px rgba(34, 197, 94, 0.2); }
+        }
+        
+        /* Matrix Rain Effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.05;
+        }
+        
+        .matrix-column {
+            position: absolute;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            animation: matrixFall 10s infinite linear;
+        }
+        
+        @keyframes matrixFall {
+            0% { transform: translateY(-100vh); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        
+        /* Card Enhancements */
+        .glass-card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateY(-10px);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.7);
+        }
+        
+        /* Enhanced Alert Animations */
+        .alert-pulse {
+            animation: alert-flash 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes alert-flash {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        
+        /* Typography */
+        .font-cyber {
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Holographic Text Effect */
+        .holographic-text {
+            background: linear-gradient(45deg, #00ff00, #00ffff, #0080ff, #8000ff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: holographicShift 3s ease-in-out infinite;
+        }
+        
+        @keyframes holographicShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        /* Enhanced Typing Effect */
+        .typing-effect {
+            overflow: hidden;
+            border-right: 3px solid #10b981;
+            white-space: nowrap;
+            animation: typing 3s steps(60, end), blink-caret 1s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #10b981; }
+        }
+        
+        /* Drone Path Animation */
+        .drone-path {
+            stroke-dasharray: 8,4;
+            animation: dash 3s linear infinite;
+        }
+        
+        @keyframes dash {
+            to { stroke-dashoffset: -24; }
+        }
+        
+        /* Responsive Grid System */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+        
+        .col-span-6 { grid-column: span 6; }
+        .col-span-4 { grid-column: span 4; }
+        .col-span-3 { grid-column: span 3; }
+        .col-span-12 { grid-column: span 12; }
+        
+        @media (max-width: 1024px) {
+            .col-span-6 { grid-column: span 12; }
+            .col-span-4 { grid-column: span 6; }
+            .col-span-3 { grid-column: span 6; }
+        }
+        
+        @media (max-width: 768px) {
+            .col-span-6, .col-span-4, .col-span-3 { grid-column: span 12; }
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(34, 197, 94, 0.6);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(34, 197, 94, 0.8);
+        }
+    </style>
+</head>
+<body class="text-white font-sans min-h-screen">
+    <!-- Animated Background Elements -->
+    <div class="particle-container" id="particles"></div>
+    <div class="neural-lines" id="neuralLines"></div>
+    <div class="matrix-rain" id="matrixRain"></div>
+    
+    <!-- Enhanced Header -->
+    <header class="glass-card m-4 p-6 rounded-2xl shadow-2xl border-green-500">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <div class="w-14 h-14 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 rounded-full flex items-center justify-center cyber-glow">
+                    <span class="text-black font-bold font-cyber text-lg">DX</span>
+                </div>
+                <div>
+                    <h1 class="text-4xl font-bold font-cyber holographic-text">
+                        Project DrishtiX
+                    </h1>
+                    <p class="text-gray-300 text-sm font-cyber">Advanced AI Command & Control Center</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-4 h-4 bg-green-500 rounded-full animate-pulse"></div>
+                    <span class="text-sm font-cyber">LIVE MONITORING</span>
+                </div>
+                <div class="bg-gradient-to-r from-green-500 to-blue-500 px-6 py-3 rounded-full font-cyber text-black font-bold cyber-glow">
+                    THREAT LEVEL: MODERATE
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-grid">
+        <!-- Row 1: Main Monitoring Systems -->
+        <section class="glass-card p-6 rounded-2xl col-span-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold font-cyber text-green-400">🌊 CROWD FLOW MATRIX</h2>
+                <div class="flex items-center space-x-3">
+                    <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                    <span class="text-xs font-cyber">PREDICTIVE MODE</span>
+                </div>
+            </div>
+            <div class="relative h-80 bg-gray-900 rounded-xl overflow-hidden">
+                <canvas id="crowdHeatmap" class="w-full h-full"></canvas>
+                <div class="absolute top-4 left-4 space-y-2">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-red-500 rounded"></div>
+                        <span class="text-xs font-cyber">Critical (>80%)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-yellow-500 rounded"></div>
+                        <span class="text-xs font-cyber">Warning (60-80%)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-green-500 rounded"></div>
+                        <span class="text-xs font-cyber">Safe (<60%)</span>
+                    </div>
+                </div>
+                <div class="absolute bottom-4 right-4 bg-red-600 px-4 py-3 rounded-lg alert-pulse">
+                    <div class="text-sm font-cyber">⚠️ BOTTLENECK PREDICTED</div>
+                    <div class="text-xs">Gate 3 - 14 minutes</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card p-6 rounded-2xl col-span-6">
+            <h2 class="text-2xl font-bold font-cyber text-blue-400 mb-6">🤖 GEMINI COMMAND</h2>
+            <div class="space-y-4">
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <div class="text-sm text-gray-300 mb-2">Commander Query:</div>
+                    <input type="text" id="commandInput" placeholder="Ask Gemini anything..." 
+                           class="w-full bg-gray-700 bg-opacity-70 text-white p-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none font-cyber">
+                </div>
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg min-h-32">
+                    <div class="text-sm text-gray-300 mb-2">AI Response:</div>
+                    <div id="aiResponse" class="text-green-400 font-cyber">
+                        Analyzing crowd patterns... Zone A showing 85% density with increasing velocity vectors. Recommend immediate deployment of Team Alpha to redirect flow through Gates 2 and 4.
+                    </div>
+                </div>
+                <div class="flex space-x-3">
+                    <button onclick="executeCommand()" class="bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-lg font-cyber transition-all duration-300 transform hover:scale-105">
+                        EXECUTE
+                    </button>
+                    <button onclick="clearCommand()" class="bg-gray-600 hover:bg-gray-500 px-6 py-3 rounded-lg font-cyber transition-all duration-300">
+                        CLEAR
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Row 2: Specialized Monitoring -->
+        <section class="glass-card p-6 rounded-2xl col-span-3">
+            <h2 class="text-xl font-bold font-cyber text-purple-400 mb-4">🧠 EMOTION RADAR</h2>
+            <div class="space-y-4">
+                <div class="bg-gradient-to-r from-red-600 to-red-400 p-4 rounded-lg">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-cyber text-sm">Zone A</span>
+                        <span class="text-3xl">😱</span>
+                    </div>
+                    <div class="text-xs mb-2">Panic Level: 89%</div>
+                    <div class="w-full bg-red-800 rounded-full h-2">
+                        <div class="bg-red-400 h-2 rounded-full transition-all duration-1000" style="width: 89%"></div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-yellow-600 to-yellow-400 p-4 rounded-lg">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-cyber text-sm">Zone B</span>
+                        <span class="text-3xl">😰</span>
+                    </div>
+                    <div class="text-xs mb-2">Anxiety Level: 67%</div>
+                    <div class="w-full bg-yellow-800 rounded-full h-2">
+                        <div class="bg-yellow-400 h-2 rounded-full transition-all duration-1000" style="width: 67%"></div>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-green-600 to-green-400 p-4 rounded-lg">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-cyber text-sm">Zone C</span>
+                        <span class="text-3xl">😊</span>
+                    </div>
+                    <div class="text-xs mb-2">Calm Level: 92%</div>
+                    <div class="w-full bg-green-800 rounded-full h-2">
+                        <div class="bg-green-400 h-2 rounded-full transition-all duration-1000" style="width: 92%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card p-6 rounded-2xl col-span-3">
+            <h2 class="text-xl font-bold font-cyber text-cyan-400 mb-4">🚁 DRONE SWARM</h2>
+            <div class="relative h-40 bg-gray-900 rounded-lg overflow-hidden mb-4">
+                <svg class="w-full h-full" viewBox="0 0 200 100">
+                    <path d="M20,20 Q50,10 80,20 T140,20" stroke="#06b6d4" stroke-width="2" fill="none" class="drone-path"/>
+                    <path d="M20,50 Q50,40 80,50 T140,50" stroke="#06b6d4" stroke-width="2" fill="none" class="drone-path"/>
+                    <path d="M20,80 Q50,70 80,80 T140,80" stroke="#06b6d4" stroke-width="2" fill="none" class="drone-path"/>
+                    <g class="animate-pulse">
+                        <circle cx="30" cy="25" r="3" fill="#06b6d4"/>
+                        <circle cx="70" cy="45" r="3" fill="#06b6d4"/>
+                        <circle cx="120" cy="75" r="3" fill="#06b6d4"/>
+                    </g>
+                </svg>
+                <div class="absolute bottom-2 left-2 text-xs font-cyber">
+                    <div>Active: 12 drones</div>
+                    <div>Coverage: 94%</div>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <button class="w-full bg-cyan-600 hover:bg-cyan-500 py-3 rounded-lg font-cyber text-sm transition-all duration-300 transform hover:scale-105">
+                    DEPLOY TO ZONE A
+                </button>
+                <button class="w-full bg-gray-600 hover:bg-gray-500 py-3 rounded-lg font-cyber text-sm transition-all duration-300">
+                    RECALL SWARM
+                </button>
+            </div>
+        </section>
+
+        <section class="glass-card p-6 rounded-2xl col-span-3">
+            <h2 class="text-xl font-bold font-cyber text-orange-400 mb-4">📊 PREDICTIVE ANALYTICS</h2>
+            <div class="h-32 mb-4">
+                <canvas id="predictiveChart"></canvas>
+            </div>
+            <div class="space-y-3 text-sm">
+                <div class="flex justify-between items-center">
+                    <span>Next Incident:</span>
+                    <span class="text-orange-400 font-cyber">12 min</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Confidence:</span>
+                    <span class="text-green-400 font-cyber">87%</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span>Risk Level:</span>
+                    <span class="text-red-400 font-cyber">HIGH</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card p-6 rounded-2xl col-span-3">
+            <h2 class="text-xl font-bold font-cyber text-yellow-400 mb-4">🔍 VISUAL SEARCH AI</h2>
+            <div class="space-y-4">
+                <div class="border-2 border-dashed border-yellow-500 rounded-lg p-6 text-center">
+                    <input type="file" id="personImage" class="hidden" accept="image/*">
+                    <label for="personImage" class="cursor-pointer">
+                        <div class="text-yellow-400 text-4xl mb-2">📸</div>
+                        <div class="text-sm font-cyber">Upload Photo</div>
+                    </label>
+                </div>
+                <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg">
+                    <div class="text-sm text-gray-300 mb-2">Search Results:</div>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between bg-green-700 p-2 rounded">
+                            <span class="text-xs font-cyber">Match Found: 94%</span>
+                            <span class="text-xs">Zone B, Camera 7</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-yellow-700 p-2 rounded">
+                            <span class="text-xs font-cyber">Possible Match: 76%</span>
+                            <span class="text-xs">Zone D, Camera 3</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-full bg-yellow-600 hover:bg-yellow-500 py-3 rounded-lg font-cyber text-sm transition-all duration-300 transform hover:scale-105">
+                    TRACK MOVEMENT
+                </button>
+            </div>
+        </section>
+
+        <!-- Row 3: Social Intelligence -->
+        <section class="glass-card p-6 rounded-2xl col-span-12">
+            <h2 class="text-xl font-bold font-cyber text-pink-400 mb-4">📱 SOCIAL INTEL FEED</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-red-800 bg-opacity-70 p-4 rounded-lg">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <div class="w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
+                        <span class="text-xs font-cyber">TWITTER • 2 min ago</span>
+                    </div>
+                    <div class="text-sm mb-2">"Crowd getting crazy near main stage! Can't move! #Event2024"</div>
+                    <div class="text-xs text-gray-400">Sentiment: PANIC • Location: Zone A</div>
+                </div>
+                <div class="bg-yellow-800 bg-opacity-70 p-4 rounded-lg">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <div class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+                        <span class="text-xs font-cyber">INSTAGRAM • 5 min ago</span>
+                    </div>
+                    <div class="text-sm mb-2">"Long queues at food court, getting restless..."</div>
+                    <div class="text-xs text-gray-400">Sentiment: FRUSTRATED • Location: Zone B</div>
+                </div>
+                <div class="bg-green-800 bg-opacity-70 p-4 rounded-lg">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-xs font-cyber">TWITTER • 8 min ago</span>
+                    </div>
+                    <div class="text-sm mb-2">"Amazing vibes at the side stage! Perfect spot!"</div>
+                    <div class="text-xs text-gray-400">Sentiment: POSITIVE • Location: Zone C</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Row 4: Critical Actions -->
+        <section class="glass-card p-6 rounded-2xl col-span-12">
+            <h2 class="text-2xl font-bold font-cyber text-red-400 mb-6">🚨 CRITICAL ACTIONS REQUIRED</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-red-700 bg-opacity-70 p-6 rounded-lg alert-pulse">
+                    <h3 class="font-cyber text-lg mb-3">IMMEDIATE</h3>
+                    <p class="text-sm mb-4">Deploy crowd control to Zone A. Bottleneck forming at Gate 3.</p>
+                    <button class="w-full bg-red-600 hover:bg-red-500 py-3 rounded font-cyber transition-all duration-300 transform hover:scale-105">
+                        EXECUTE NOW
+                    </button>
+                </div>
+                <div class="bg-yellow-700 bg-opacity-70 p-6 rounded-lg">
+                    <h3 class="font-cyber text-lg mb-3">UPCOMING</h3>
+                    <p class="text-sm mb-4">Medical team standby. Stress indicators rising in Zone B.</p>
+                    <button class="w-full bg-yellow-600 hover:bg-yellow-500 py-3 rounded font-cyber transition-all duration-300 transform hover:scale-105">
+                        PREPARE
+                    </button>
+                </div>
+                <div class="bg-blue-700 bg-opacity-70 p-6 rounded-lg">
+                    <h3 class="font-cyber text-lg mb-3">PREVENTIVE</h3>
+                    <p class="text-sm mb-4">Redirect foot traffic. Open alternative routes to reduce pressure.</p>
+                    <button class="w-full bg-blue-600 hover:bg-blue-500 py-3 rounded font-cyber transition-all duration-300 transform hover:scale-105">
+                        SCHEDULE
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Initialize animated background elements
+        function initializeBackground() {
+            // Create floating particles
+            const particleContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particleContainer.appendChild(particle);
+            }
+            
+            // Create neural network lines
+            const neuralContainer = document.getElementById('neuralLines');
+            for (let i = 0; i < 20; i++) {
+                const line = document.createElement('div');
+                line.className = 'neural-line';
+                line.style.top = Math.random() * 100 + '%';
+                line.style.left = Math.random() * 100 + '%';
+                line.style.width = Math.random() * 300 + 100 + 'px';
+                line.style.transform = `rotate(${Math.random() * 360}deg)`;
+                line.style.animationDelay = Math.random() * 8 + 's';
+                neuralContainer.appendChild(line);
+            }
+            
+            // Create matrix rain
+            const matrixContainer = document.getElementById('matrixRain');
+            const matrixChars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            for (let i = 0; i < 100; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = Math.random() * 100 + '%';
+                column.style.animationDelay = Math.random() * 10 + 's';
+                column.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                column.textContent = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                matrixContainer.appendChild(column);
+            }
+        }
+        
+        // Initialize charts
+        function initializeCharts() {
+            const ctx1 = document.getElementById('crowdHeatmap').getContext('2d');
+            const ctx2 = document.getElementById('predictiveChart').getContext('2d');
+            
+            // Enhanced crowd heatmap
+            const crowdData = {
+                labels: ['Zone A', 'Zone B', 'Zone C', 'Zone D'],
+                datasets: [{
+                    label: 'Crowd Density',
+                    data: [85, 67, 45, 30],
+                    backgroundColor: [
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(245, 158, 11, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(59, 130, 246, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgb(239, 68, 68)',
+                        'rgb(245, 158, 11)',
+                        'rgb(16, 185, 129)',
+                        'rgb(59, 130, 246)'
+                    ],
+                    borderWidth: 2
+                }]
+            };
+            
+            new Chart(ctx1, {
+                type: 'doughnut',
+                data: crowdData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
+                    }
+                }
+            });
+            
+            // Enhanced predictive analytics chart
+            const timeData = {
+                labels: ['Now', '5min', '10min', '15min', '20min'],
+                datasets: [{
+                    label: 'Risk Level',
+                    data: [60, 75, 85, 90, 95],
+                    borderColor: 'rgb(249, 115, 22)',
+                    backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: 'rgb(249, 115, 22)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5
+                }]
+            };
+            
+            new Chart(ctx2, {
+                type: 'line',
+                data: timeData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Interactive functions
+        function executeCommand() {
+            const input = document.getElementById('commandInput');
+            const response = document.getElementById('aiResponse');
+            
+            if (input.value.trim()) {
+                response.innerHTML = `Processing command: "${input.value}"...<br><br>`;
+                
+                // Simulate AI processing with typing effect
+                setTimeout(() => {
+                    response.innerHTML += 'Command executed successfully. Deploying resources based on AI analysis.<br>';
+                    response.innerHTML += 'Real-time adjustments initiated. Monitoring for effectiveness.';
+                }, 1500);
+                
+                input.value = '';
+            }
+        }
+        
+        function clearCommand() {
+            document.getElementById('commandInput').value = '';
+            document.getElementById('aiResponse').innerHTML = 'Ready for new command...';
+        }
+        
+        // Real-time data simulation
+        function simulateRealTimeUpdates() {
+            const zones = ['Zone A', 'Zone B', 'Zone C', 'Zone D'];
+            const emotions = ['😱', '😰', '😊', '😐', '😓'];
+            
+            setInterval(() => {
+                // Update emotion indicators
+                const emotionCards = document.querySelectorAll('[class*="gradient-to-r"]');
+                emotionCards.forEach(card => {
+                    const progressBar = card.querySelector('.h-2');
+                    if (progressBar) {
+                        const newWidth = Math.random() * 100;
+                        progressBar.style.width = newWidth + '%';
+                    }
+                });
+                
+                // Update social media feed (simulate new posts)
+                const socialFeed = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-3');
+                if (socialFeed && Math.random() > 0.7) {
+                    const newPost = document.createElement('div');
+                    newPost.className = 'bg-blue-800 bg-opacity-70 p-4 rounded-lg';
+                    newPost.innerHTML = `
+                        <div class="flex items-center space-x-2 mb-2">
+                            <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                            <span class="text-xs font-cyber">FACEBOOK • Just now</span>
+                        </div>
+                        <div class="text-sm mb-2">"Update: Event security looking good! 👍"</div>
+                        <div class="text-xs text-gray-400">Sentiment: POSITIVE • Location: Zone ${zones[Math.floor(Math.random() * zones.length)]}</div>
+                    `;
+                    socialFeed.insertBefore(newPost, socialFeed.firstChild);
+                    
+                    // Remove oldest post if more than 3
+                    if (socialFeed.children.length > 3) {
+                        socialFeed.removeChild(socialFeed.lastChild);
+                    }
+                }
+                
+                console.log('Real-time update completed');
+            }, 10000);
+        }
+        
+        // Handle file upload
+        function handleFileUpload() {
+            document.getElementById('personImage').addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const fileName = e.target.files[0].name;
+                    const label = document.querySelector('label[for="personImage"]');
+                    label.innerHTML = `
+                        <div class="text-yellow-400 text-2xl mb-2">✅</div>
+                        <div class="text-sm font-cyber">Processing: ${fileName}</div>
+                    `;
+                    
+                    // Simulate AI processing
+                    setTimeout(() => {
+                        alert('🎯 Person Detection Complete!\n\nResults:\n• 94% match found in Zone B, Camera 7\n• 76% possible match in Zone D, Camera 3\n• Tracking movement patterns...');
+                        
+                        // Reset upload interface
+                        setTimeout(() => {
+                            label.innerHTML = `
+                                <div class="text-yellow-400 text-4xl mb-2">📸</div>
+                                <div class="text-sm font-cyber">Upload Photo</div>
+                            `;
+                        }, 3000);
+                    }, 2000);
+                }
+            });
+        }
+        
+        // Add keyboard shortcuts
+        function addKeyboardShortcuts() {
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    executeCommand();
+                }
+                if (e.ctrlKey && e.key === 'Escape') {
+                    clearCommand();
+                }
+            });
+        }
+        
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBackground();
+            initializeCharts();
+            simulateRealTimeUpdates();
+            handleFileUpload();
+            addKeyboardShortcuts();
+            
+            // Add some initial animations
+            setTimeout(() => {
+                document.querySelectorAll('.glass-card').forEach((card, index) => {
+                    card.style.animation = `slideInUp 0.6s ease-out ${index * 0.1}s both`;
+                });
+            }, 500);
+        });
+        
+        // Add slide-in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInUp {
+                from {
+                    transform: translateY(30px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

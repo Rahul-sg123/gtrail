@@ -1,0 +1,59 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project DrishtiX – Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 text-white min-h-screen">
+    <header class="bg-gray-800 p-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-teal-400">🧠 Project DrishtiX</h1>
+      <div>
+        <span class="mr-4">🔔 3 Alerts</span>
+        <button class="bg-teal-500 text-white px-3 py-1 rounded">Settings</button>
+      </div>
+    </header>
+
+    <main class="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Zone Overview -->
+      <section class="bg-gray-800 p-4 rounded shadow col-span-1 lg:col-span-2">
+        <h2 class="text-xl font-semibold mb-4 text-teal-300">📍 Zone Overview</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-yellow-600 p-4 rounded">🟠 Zone A<br>Congested</div>
+          <div class="bg-green-600 p-4 rounded">🟢 Zone B<br>Normal</div>
+          <div class="bg-red-600 p-4 rounded">🔴 Zone C<br>Overcrowded</div>
+          <div class="bg-blue-600 p-4 rounded">🔵 Zone D<br>Calm</div>
+        </div>
+      </section>
+
+      <!-- Alerts -->
+      <section class="bg-gray-800 p-4 rounded shadow">
+        <h2 class="text-xl font-semibold mb-4 text-red-400">🚨 Live Alerts</h2>
+        <ul class="space-y-2">
+          <li class="bg-red-700 p-2 rounded">🚑 Medical Emergency at Gate 2</li>
+          <li class="bg-yellow-700 p-2 rounded">🔥 Smoke detected in Zone C</li>
+          <li class="bg-orange-700 p-2 rounded">👥 Crowd surge near Exit D</li>
+        </ul>
+      </section>
+
+      <!-- Lost & Found -->
+      <section class="bg-gray-800 p-4 rounded shadow">
+        <h2 class="text-xl font-semibold mb-4 text-yellow-300">🔎 Lost & Found</h2>
+        <input type="file" class="bg-gray-700 text-white p-2 rounded w-full" />
+        <p class="mt-3 text-sm text-gray-300">Upload a photo to scan crowd feeds.</p>
+      </section>
+
+      <!-- Commander Copilot -->
+      <section class="bg-gray-800 p-4 rounded shadow col-span-1 lg:col-span-3">
+        <h2 class="text-xl font-semibold mb-4 text-blue-300">🗣️ Commander Copilot</h2>
+        <input
+          type="text"
+          placeholder="Summarize events in Zone C over last 30 minutes..."
+          class="w-full p-3 rounded bg-gray-700 text-white"
+        />
+      </section>
+    </main>
+  </body>
+</html>
